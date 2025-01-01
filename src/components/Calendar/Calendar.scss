@@ -1,0 +1,10 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.calendar {
+
+    &__big-calendar {
+        width: 50%;
+        min-height: 20rem;
+    }
+}
