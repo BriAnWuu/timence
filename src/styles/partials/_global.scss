@@ -1,0 +1,35 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
+*, *::before, *::after {
+    box-sizing: inherit;
+    font: inherit;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+// html {
+    // color-scheme: dark light;
+// }
+
+body {
+    min-height: 100vh;
+}
+
+img, svg {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
