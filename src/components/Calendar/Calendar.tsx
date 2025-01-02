@@ -5,6 +5,8 @@ import { parse } from "date-fns/parse";
 import { startOfWeek } from "date-fns/startOfWeek";
 import { Calendar as BigCalendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../state/store";
 import "./Calendar.scss";
 
 const locales = {
@@ -21,7 +23,8 @@ const localizer = dateFnsLocalizer({
 
 
 function Calendar() {
-    const events: [] = []
+    const events = useSelector((state: RootState) => state.events);
+    // const dispatch = useDispatch();
 
     const handleSelectEvent = () => {
 
@@ -46,7 +49,6 @@ function Calendar() {
                 endAccessor="end"
                 views={ ["month"] }
             />
-
         </section>
     )
 };

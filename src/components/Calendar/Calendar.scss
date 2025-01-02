@@ -5,6 +5,10 @@
 
     &__big-calendar {
         width: 100%;
-        min-height: 20rem;
+        
+
+        @include tablet {
+           min-height: 35rem; 
+        }
     }
 }
