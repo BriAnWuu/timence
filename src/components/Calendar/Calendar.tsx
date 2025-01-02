@@ -3,7 +3,7 @@ import { getDay } from "date-fns/getDay";
 import { enUS } from "date-fns/locale/en-US";
 import { parse } from "date-fns/parse";
 import { startOfWeek } from "date-fns/startOfWeek";
-import { Calendar as BigCalendar, type Event, dateFnsLocalizer } from "react-big-calendar";
+import { Calendar as BigCalendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./Calendar.scss";
 
@@ -18,8 +18,6 @@ const localizer = dateFnsLocalizer({
     getDay,
     locales,
 });
-
-
 
 
 function Calendar() {
