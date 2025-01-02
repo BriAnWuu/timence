@@ -3,7 +3,8 @@ import { getDay } from "date-fns/getDay";
 import { enUS } from "date-fns/locale/en-US";
 import { parse } from "date-fns/parse";
 import { startOfWeek } from "date-fns/startOfWeek";
-import { Calendar as BigCalendar, dateFnsLocalizer } from "react-big-calendar";
+import { Calendar as BigCalendar, type Event, dateFnsLocalizer } from "react-big-calendar";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./Calendar.scss";
 
 const locales = {
@@ -19,15 +20,33 @@ const localizer = dateFnsLocalizer({
 });
 
 
+
+
 function Calendar() {
+    const events: [] = []
+
+    const handleSelectEvent = () => {
+
+    }
+
+    const handleSelectSlot = () => {
+
+    }
+
     return (
         <section className="calendar">
             <h2>A Beautiful Calendar</h2>
             <BigCalendar
                 className="calendar__big-calendar"
                 localizer={localizer}
+                events={events}
+                selectable
+                onSelectEvent={handleSelectEvent}
+                onSelectSlot={handleSelectSlot}
+                popup
                 startAccessor="start"
                 endAccessor="end"
+                views={ ["month"] }
             />
 
         </section>
