@@ -22,7 +22,7 @@ const localizer = dateFnsLocalizer({
     locales,
 });
 
-type CalendarProps = {
+interface CalendarProps {
     children?: ReactNode
 }
 
