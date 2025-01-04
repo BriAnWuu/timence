@@ -3,6 +3,7 @@ import { getDay } from "date-fns/getDay";
 import { enUS } from "date-fns/locale/en-US";
 import { parse } from "date-fns/parse";
 import { startOfWeek } from "date-fns/startOfWeek";
+import { ReactNode } from "react";
 import { Calendar as BigCalendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useSelector } from "react-redux";
@@ -21,8 +22,11 @@ const localizer = dateFnsLocalizer({
     locales,
 });
 
+type CalendarProps = {
+    children?: ReactNode
+}
 
-function Calendar() {
+function Calendar({ children }: CalendarProps) {
     const events = useSelector((state: RootState) => state.events);
     // const dispatch = useDispatch();
 
@@ -49,6 +53,7 @@ function Calendar() {
                 endAccessor="end"
                 views={ ["month"] }
             />
+            {children}
         </section>
     )
 };

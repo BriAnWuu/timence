@@ -2,13 +2,20 @@
 @use "../../styles/partials/mixins" as *;
 
 .calendar {
+    width: 100%;
+    padding: calc($SPACING * 2);
 
     &__big-calendar {
         width: 100%;
-        
+        min-height: 20rem;
 
         @include tablet {
-           min-height: 35rem; 
+           min-height: 40rem; 
         }
     }
 }
+
+// font size smaller
+// separate font size
+// calendar nav location / style
+// cell more height
