@@ -1,11 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import eventsReducer from "./events/eventsSlice";
-import selectedDateScheduleReducer from "./selectedDateSchedule/selectedDateSchedule";
+import selectedDateScheduleReducer from "./selectedDateSchedule/selectedDateScheduleSlice";
+import tagsReducer from "./tags/tagsSlice";
 
 export const store = configureStore({
     reducer: {
         events: eventsReducer,
         selectedDateSchedule: selectedDateScheduleReducer,
+        tags: tagsReducer,
+        // eventform, tags,
     },
 });
 

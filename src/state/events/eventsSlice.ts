@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import mockEvents from "../../api/mock/mockEvents";
 import { CalendarEventInfo } from "../../ts/interfaces/event.interface";
-
-const generateId = () => (Math.floor(Math.random() * 10000) + 1).toString()
+import { generateId } from "../../utils/generateId";
 
 const initialState: CalendarEventInfo[] = mockEvents;
 
@@ -15,7 +14,7 @@ const eventsSlice = createSlice({
                 ...action.payload,
                 _id: generateId(),
             }
-            state.push(newEvent)
+            state.push(newEvent);
         },
         deleteEvent: () => {
 
