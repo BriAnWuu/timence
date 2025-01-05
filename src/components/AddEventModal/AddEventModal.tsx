@@ -15,7 +15,6 @@ import {
     ChangeEvent,
     Dispatch,
     forwardRef,
-    KeyboardEvent,
     ReactElement,
     Ref,
     SetStateAction,
@@ -39,32 +38,30 @@ const Transition = forwardRef(function Transition(
 
 interface AddEventModalProps {
     open: boolean
-    onClose: Dispatch<SetStateAction<void>>
+    onModalClose: Dispatch<SetStateAction<void>>
 }
 
-function AddEventModal({ open, onClose }: AddEventModalProps) {
+function AddEventModal({ open, onModalClose }: AddEventModalProps) {
     const tags = useSelector((state: RootState) => state.tags);
-    // const dispatch = useDispatch();
 
     const [description, setDescription] = useState<string>("");
-    const [tagId, setTagId] = useState<string | undefined>("");
+    const [tagId, setTagId] = useState<string | undefined>(undefined);
 
+
+    const handleModalClose = () => {
+        onModalClose()
+        setDescription("")
+        setTagId(undefined)
+    }
     const handleDescriptionChange = (event: ChangeEvent<HTMLInputElement>) => {
         setDescription(event.target.value)
     }
-
     const handleTagChange = (event: SyntheticEvent, value: CategoryTag | null) => {
         setTagId(value?._id)
     }
 
-    // const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    //     if (event.key === "Enter") {
-    //         // event.defaultMuiPrevented = true;
-    //     }
-    // }
-
     const formValid = (): boolean => {
-        if (!description || typeof tagId !== "string") {
+        if (!description.trim()) {
             return false
         }
         return true
@@ -73,7 +70,7 @@ function AddEventModal({ open, onClose }: AddEventModalProps) {
     return (
         <Dialog 
             open={open}
-            onClose={() => onClose()}
+            onClose={handleModalClose}
             TransitionComponent={Transition}
             keepMounted
             aria-description="add event modal"
@@ -95,10 +92,9 @@ function AddEventModal({ open, onClose }: AddEventModalProps) {
                             />
                             <Autocomplete
                                 id="tags"
-                                clearOnBlur={false}
+                                clearOnBlur={true}
                                 options={tags}
                                 getOptionLabel={(option) => option.title}
-                                // onKeyDown={handleKeyDown}
                                 onChange={handleTagChange}
                                 renderInput={(params) =>(
                                     <TextField 
@@ -124,6 +120,7 @@ function AddEventModal({ open, onClose }: AddEventModalProps) {
                 <Button 
                     variant="outlined"
                     color="error"
+                    onClick={handleModalClose}
                 >
                     Cancel
                 </Button>

@@ -63,7 +63,7 @@ function Calendar({ children }: CalendarProps) {
             {children}
             <AddEventModal
                 open={openAddEventModel}
-                onClose={handleModalClose}
+                onModalClose={handleModalClose}
             />
         </section>
     )
