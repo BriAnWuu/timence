@@ -21,9 +21,11 @@ import {
     SyntheticEvent,
     useState
 } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addOneEvent } from "../../state/events/eventsSlice";
 import { RootState } from "../../state/store";
 import { CategoryTag } from "../../ts/interfaces/tag.interface";
+import { generateId } from "../../utils/generateId";
 import "./AddEventModal.scss";
 
 const Transition = forwardRef(function Transition(
@@ -42,7 +44,9 @@ interface AddEventModalProps {
 }
 
 function AddEventModal({ open, onModalClose }: AddEventModalProps) {
+    const currentEvent = useSelector((state: RootState) => state.currentEvent)
     const tags = useSelector((state: RootState) => state.tags);
+    const dispatch = useDispatch();
 
     const [description, setDescription] = useState<string>("");
     const [tagId, setTagId] = useState<string | undefined>(undefined);
@@ -58,6 +62,18 @@ function AddEventModal({ open, onModalClose }: AddEventModalProps) {
     }
     const handleTagChange = (event: SyntheticEvent, value: CategoryTag | null) => {
         setTagId(value?._id)
+    }
+    const handleSubmit = () => {
+        dispatch(addOneEvent({
+            title: description,
+            description,
+            tagId,
+            _id: generateId(),
+            start: currentEvent?.start,
+            end: currentEvent?.end,
+        }))
+
+        handleModalClose()
     }
 
     const formValid = (): boolean => {
@@ -114,6 +130,7 @@ function AddEventModal({ open, onModalClose }: AddEventModalProps) {
                     variant="contained"
                     color="success"
                     disabled={!formValid()}
+                    onClick={handleSubmit}
                 >
                     Add
                 </Button>

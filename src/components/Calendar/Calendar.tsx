@@ -1,13 +1,16 @@
+import { current } from "@reduxjs/toolkit";
 import { format } from "date-fns/format";
 import { getDay } from "date-fns/getDay";
 import { enUS } from "date-fns/locale/en-US";
 import { parse } from "date-fns/parse";
 import { startOfWeek } from "date-fns/startOfWeek";
 import { ReactNode, useState } from "react";
-import { Calendar as BigCalendar, dateFnsLocalizer } from "react-big-calendar";
+import { Calendar as BigCalendar, dateFnsLocalizer, type Event } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deselectCurrentEvent, setCurrentEvent } from "../../state/currentEvent/currentEventSlice";
 import { RootState } from "../../state/store";
+import { CalendarEventInfo } from "../../ts/interfaces/event.interface";
 import AddEventModal from "../AddEventModal/AddEventModal";
 import "./Calendar.scss";
 
@@ -29,20 +32,28 @@ interface CalendarProps {
 
 function Calendar({ children }: CalendarProps) {
     const events = useSelector((state: RootState) => state.events);
-    // const dispatch = useDispatch();
+    const currentEvent = useSelector((state: RootState) => state.currentEvent);
+    const dispatch = useDispatch();
+
 
     const [openAddEventModel, setOpenAddEventModal] = useState<boolean>(false);
+    
 
-    const handleSelectEvent = () => {
 
+    const handleSelectEvent = (event: CalendarEventInfo) => {
+        dispatch(setCurrentEvent(event))
     }
 
-    const handleSelectSlot = () => {
+    const handleSelectSlot = (event: Event) => {
+        console.log(event)
         setOpenAddEventModal(true)
+        dispatch(setCurrentEvent(event))
     }
 
     const handleModalClose = () => {
         setOpenAddEventModal(false)
+        dispatch(deselectCurrentEvent())
+        // clear eventform
     }
 
     return (
