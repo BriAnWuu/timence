@@ -115,11 +115,20 @@ function AddEventModal({ open, onModalClose }: AddEventModalProps) {
                                 getOptionLabel={(option) => option.title}
                                 onChange={handleTagChange}
                                 renderInput={(params) =>(
+                                    <div>
                                     <TextField 
                                         {...params} 
                                         label="Tags" 
                                         variant="filled"
                                     />
+                                    <div 
+                                        style={{ 
+                                            backgroundColor: params.inputProps.color,
+                                            width: 20,
+                                            height: 20
+                                        }} 
+                                    />
+                                    </div>
                                 )}
                                 fullWidth={true}
                             />

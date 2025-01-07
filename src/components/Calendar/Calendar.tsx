@@ -33,6 +33,7 @@ interface CalendarProps {
 function Calendar({ children }: CalendarProps) {
     // redux states
     const events = useSelector((state: RootState) => state.events);
+    const tags = useSelector((state: RootState) => state.tags);
     const dispatch = useDispatch();
 
     // local states
@@ -76,6 +77,15 @@ function Calendar({ children }: CalendarProps) {
                 startAccessor="start"
                 endAccessor="end"
                 views={ ["month"] }
+                eventPropGetter={ (event) => {
+                    const hasTag = tags.find((tag) => tag._id === event.tagId)
+                    return {
+                        style: {
+                            backgroundColor: hasTag ? hasTag.color : "#06448f",
+                            borderColor: hasTag ? hasTag.color : "#06448f",
+                        },
+                    }
+                }}
             />
             {children}
             <AddEventModal

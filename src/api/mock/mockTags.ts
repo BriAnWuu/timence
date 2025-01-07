@@ -4,12 +4,12 @@ const mockTags: CategoryTag[] = [
     {
         _id: "1",
         title: "Work",
-        color: "#3CB371"
+        color: "#b64fc8"
     },
     {
         _id: "2",
         title: "Kids",
-        color: "#3CB371"
+        color: "#e14a4a"
     },
     {
         _id: "3",
@@ -19,7 +19,7 @@ const mockTags: CategoryTag[] = [
     {
         _id: "4",
         title: "Grocery",
-        color: "#3CB371"
+        color: "#5723e5"
     },
     {
         _id: "5",
