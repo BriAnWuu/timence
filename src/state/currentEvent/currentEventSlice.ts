@@ -1,22 +1,33 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { type Event } from "react-big-calendar";
-import { CalendarEventInfo } from "../../ts/interfaces/event.interface";
+import { CurrentEvent, ReduxCalendarEventInfo, SerializedEvent } from "../../ts/interfaces/event.interface";
 
-const initialState: Event | CalendarEventInfo = {};
+const initialState: CurrentEvent = {
+    start: undefined,
+    end: undefined,
+    _id: undefined,
+};
 
 const currentEventSlice = createSlice({
     name: "currentEvent",
     initialState,
     reducers: {
-        setCurrentEvent: (state, action: PayloadAction<Event | CalendarEventInfo>) => {
-            return action.payload
+        setCurrentEvent: (state, action: PayloadAction<ReduxCalendarEventInfo>) => {
+            const { start, end, _id, ...rest} = action.payload
+            state.start = start
+            state.end = end
+            state._id = _id
+        },
+        setCurrentDate: (state, action: PayloadAction<SerializedEvent>) => {
+            const { start, end, ...rest } = action.payload
+            state.start = start
+            state.end = end
         },
         deselectCurrentEvent: () => {
-            return {}
+            return initialState
         }
     },
 });
 
-export const { setCurrentEvent, deselectCurrentEvent } = currentEventSlice.actions;
+export const { setCurrentEvent, setCurrentDate, deselectCurrentEvent } = currentEventSlice.actions;
 
 export default currentEventSlice.reducer;

@@ -44,14 +44,17 @@ interface AddEventModalProps {
 }
 
 function AddEventModal({ open, onModalClose }: AddEventModalProps) {
+    // redux states
     const currentEvent = useSelector((state: RootState) => state.currentEvent)
     const tags = useSelector((state: RootState) => state.tags);
     const dispatch = useDispatch();
 
+    // local states
     const [description, setDescription] = useState<string>("");
     const [tagId, setTagId] = useState<string | undefined>(undefined);
 
 
+    // handle functions
     const handleModalClose = () => {
         onModalClose()
         setDescription("")
@@ -66,11 +69,10 @@ function AddEventModal({ open, onModalClose }: AddEventModalProps) {
     const handleSubmit = () => {
         dispatch(addOneEvent({
             title: description,
-            description,
             tagId,
             _id: generateId(),
-            start: currentEvent?.start,
-            end: currentEvent?.end,
+            start: currentEvent.start,
+            end: currentEvent.end,
         }))
 
         handleModalClose()

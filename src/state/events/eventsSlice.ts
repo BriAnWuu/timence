@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import mockEvents from "../../api/mock/mockEvents";
-import { CalendarEventInfo } from "../../ts/interfaces/event.interface";
+import { ReduxCalendarEventInfo } from "../../ts/interfaces/event.interface";
 
 
-const initialState: CalendarEventInfo[] = mockEvents;
+const initialState: ReduxCalendarEventInfo[] = mockEvents;
 
 const eventsSlice = createSlice({
     name: "events",
     initialState,
     reducers: {
-        addOneEvent: (state, action: PayloadAction<CalendarEventInfo>) => {
-            state.push(action.payload);
+        addOneEvent: (state, action: PayloadAction<any>) => {  
+            state.push(action.payload)
         },
         deleteEvent: () => {
 
