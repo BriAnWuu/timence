@@ -1,5 +1,6 @@
 import {
     Autocomplete,
+    AutocompleteChangeReason,
     Box,
     Button,
     Dialog,
@@ -15,7 +16,9 @@ import {
     ChangeEvent,
     Dispatch,
     forwardRef,
+    HTMLAttributes,
     ReactElement,
+    ReactNode,
     Ref,
     SetStateAction,
     SyntheticEvent,
@@ -28,6 +31,7 @@ import { CategoryTag } from "../../ts/interfaces/tag.interface";
 import { generateId } from "../../utils/generateId";
 import "./AddEventModal.scss";
 
+// modal animation transition properties
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
       children: ReactElement<any, any>;
@@ -51,25 +55,29 @@ function AddEventModal({ open, onModalClose }: AddEventModalProps) {
 
     // local states
     const [description, setDescription] = useState<string>("");
-    const [tagId, setTagId] = useState<string | undefined>(undefined);
+    const [pendingTag, setPendingTag] = useState<CategoryTag | null>(null);
 
 
     // handle functions
     const handleModalClose = () => {
         onModalClose()
         setDescription("")
-        setTagId(undefined)
+        setPendingTag(null)
     }
     const handleDescriptionChange = (event: ChangeEvent<HTMLInputElement>) => {
         setDescription(event.target.value)
     }
-    const handleTagChange = (event: SyntheticEvent, value: CategoryTag | null) => {
-        setTagId(value?._id)
+    const handleTagChange = (event: SyntheticEvent, value: CategoryTag | null, reason: AutocompleteChangeReason) => {
+        if (
+            event.type === "keydown" &&
+            reason === "removeOption"
+        ) return;
+        setPendingTag(value)
     }
     const handleSubmit = () => {
         dispatch(addOneEvent({
             title: description,
-            tagId,
+            tagId: pendingTag?._id,
             _id: generateId(),
             start: currentEvent.start,
             end: currentEvent.end,
@@ -78,6 +86,33 @@ function AddEventModal({ open, onModalClose }: AddEventModalProps) {
         handleModalClose()
     }
 
+    // autocomplete custom render: add color box
+    const renderOptions = (props: HTMLAttributes<HTMLLIElement>, option: CategoryTag): ReactNode => {
+        const { key, ...optionProps } = props;
+        return (
+            <li key={key} {...optionProps}>
+                <Box
+                    component="span"
+                    sx={{
+                        width: 14,
+                        height: 14,
+                        flexShrink: 0,
+                        borderRadius: '3px',
+                        mr: 1,
+                        mt: '2px',
+                    }}
+                    style={{ backgroundColor: option.color}}
+                />
+                <Box
+                    component="span"
+                >
+                    {option.title}
+                </Box>
+            </li>
+        )
+    }
+
+    // form validation
     const formValid = (): boolean => {
         if (!description.trim()) {
             return false
@@ -113,22 +148,15 @@ function AddEventModal({ open, onModalClose }: AddEventModalProps) {
                                 clearOnBlur={true}
                                 options={tags}
                                 getOptionLabel={(option) => option.title}
+                                renderOption={renderOptions}
+                                value={pendingTag}
                                 onChange={handleTagChange}
                                 renderInput={(params) =>(
-                                    <div>
-                                    <TextField 
+                                    <TextField
                                         {...params} 
                                         label="Tags" 
                                         variant="filled"
                                     />
-                                    <div 
-                                        style={{ 
-                                            backgroundColor: params.inputProps.color,
-                                            width: 20,
-                                            height: 20
-                                        }} 
-                                    />
-                                    </div>
                                 )}
                                 fullWidth={true}
                             />
