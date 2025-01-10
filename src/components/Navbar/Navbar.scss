@@ -3,4 +3,7 @@
 
 .nav {
     width: 100%;
+    padding: calc($SPACING * 2);
+    display: flex;
+    justify-content: space-between;
 }

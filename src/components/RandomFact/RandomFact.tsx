@@ -13,23 +13,17 @@ function RandomFact() {
             .catch(() => setHasError(true));
     }, []);
 
+    // render  component
     if (hasError) {
-        return <div>Error occurred when fetching random facts</div>
+        return <div>Error occurred when fetching random facts</div>;
     }
-
     if (fact === undefined) {
-        return <Loading />
+        return <Loading />;
     }
-
     if (fact === null || fact === "") {
-        return <div>No random facts for you today</div>
+        return <div>No random facts for you today</div>;
     }
-
-    return (
-        <p className="day-schedule__random-fact">
-           {fact} 
-        </p>
-    )
-};
+    return <p className="day-schedule__random-fact">{fact}</p>;
+}
 
 export default RandomFact;

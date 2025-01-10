@@ -93,10 +93,18 @@ function Calendar({ children }: PropsWithChildren) {
 
     // render component
     if (loading) {
-        return <Loading />;
+        return (
+            <div className="calendar__load-error">
+                <Loading />
+            </div>
+        );
     }
     if (error) {
-        return <div>Error occurred when fetching data</div>;
+        return (
+            <div className="calendar__load-error">
+                Error occurred when fetching calendar data
+            </div>
+        );
     }
     return (
         <section className="calendar">

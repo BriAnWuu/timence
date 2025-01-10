@@ -11,8 +11,13 @@
         min-height: 20rem;
 
         @include tablet {
-           min-height: 40rem; 
+            min-height: 40rem;
         }
+    }
+
+    &__load-error {
+        max-width: $MAX_CONTENT_WIDTH;
+        margin-inline: auto;
     }
 }
 
