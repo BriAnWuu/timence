@@ -14,6 +14,7 @@ import { RootState } from "../../state/store";
 import { CalendarEventInfo } from "../../ts/interfaces/event.interface";
 import { deserializeDate, serializeDate } from "../../utils/serializeDate";
 import AddEventModal from "../AddEventModal/AddEventModal";
+import Loading from "../Loading/Loading";
 import "./Calendar.scss";
 
 const locales = {
@@ -37,14 +38,21 @@ function Calendar({ children }: PropsWithChildren) {
 
     // local states
     const [openAddEventModel, setOpenAddEventModal] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
     
+    // fetch data
     useEffect(() => {
         const getEvents = async () => {
+            setLoading(true)
             try {
                 const fetchedEvents = await EventsService.getMockEvents();
                 dispatch(fetchEvents(fetchedEvents))
             } catch (error) {
                 console.error(error)
+                setError(true)
+            } finally {
+                setLoading(false)
             }
         }
         getEvents()
@@ -52,11 +60,9 @@ function Calendar({ children }: PropsWithChildren) {
 
     // handle functions
     const handleSelectEvent = (event: CalendarEventInfo) => {
-        console.log(event)
         dispatch(setCurrentEvent(serializeDate(event)))
     }
     const handleSelectSlot = (event: Event) => {
-        console.log(event)
         setOpenAddEventModal(true)
         dispatch(setCurrentDate(serializeDate({
             start: event.start,
@@ -68,10 +74,18 @@ function Calendar({ children }: PropsWithChildren) {
         dispatch(deselectCurrentEvent())
     }
 
-
+    // render component
+    if (loading) {
+        return <Loading />
+    }
+    if (error) {
+        return <div>Error occurred when fetching data</div>
+    }
     return (
         <section className="calendar">
-            <h2>Timence is A Beautiful Calendar</h2>
+            <h2 className="calendar__title">
+                Timence is A Beautiful Calendar
+            </h2>
             <BigCalendar
                 className="calendar__big-calendar"
                 localizer={localizer}

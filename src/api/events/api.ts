@@ -24,13 +24,23 @@ const getEvents = async () => {
 
 const getMockEvents = async (): Promise<MockEventsApi> => {
     const events = mockEvents;
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         setTimeout(() => {
-            resolve({
-                status: 200,
-                message: "Success",
-                data: events
-            })
+            const success = Math.random() > 0.1;
+            
+            if (success) {
+                resolve({
+                    status: 200,
+                    message: "Success",
+                    data: events,
+                })
+            } else {
+                reject({
+                    status: 500,
+                    message: "Internal server error",
+                    data: [],
+                })
+            }
         }, 1000)
     })
 }
