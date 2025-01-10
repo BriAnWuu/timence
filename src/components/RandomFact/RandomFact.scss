@@ -1,7 +1,2 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
-
-.day-schedule {
-    max-width: $MAX_CONTENT_WIDTH;
-    margin-inline: auto;
-}

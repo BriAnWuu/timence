@@ -2,8 +2,9 @@
 @use "../../styles/partials/mixins" as *;
 
 .calendar {
-    width: 100%;
-    padding: calc($SPACING * 2);
+    max-width: $MAX_CONTENT_WIDTH;
+    margin-inline: auto;
+    // padding: calc($SPACING * 2);
 
     &__big-calendar {
         width: 100%;

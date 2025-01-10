@@ -103,16 +103,13 @@ function AddEventModal({ open, onModalClose }: AddEventModalProps) {
                     }}
                     style={{ backgroundColor: option.color}}
                 />
-                <Box
-                    component="span"
-                >
+                <Box component="span">
                     {option.title}
                 </Box>
             </li>
         )
     }
 
-    // form validation
     const formValid = (): boolean => {
         if (!description.trim()) {
             return false

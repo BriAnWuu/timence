@@ -3,7 +3,7 @@ import { getDay } from "date-fns/getDay";
 import { enUS } from "date-fns/locale/en-US";
 import { parse } from "date-fns/parse";
 import { startOfWeek } from "date-fns/startOfWeek";
-import { ReactNode, useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { Calendar as BigCalendar, dateFnsLocalizer, type Event } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,11 +26,8 @@ const localizer = dateFnsLocalizer({
     locales,
 });
 
-interface CalendarProps {
-    children?: ReactNode
-}
 
-function Calendar({ children }: CalendarProps) {
+function Calendar({ children }: PropsWithChildren) {
     // redux states
     const events = useSelector((state: RootState) => state.events);
     const tags = useSelector((state: RootState) => state.tags);
@@ -56,14 +53,13 @@ function Calendar({ children }: CalendarProps) {
     const handleModalClose = () => {
         setOpenAddEventModal(false)
         dispatch(deselectCurrentEvent())
-        // clear eventform
     }
 
 
 
     return (
         <section className="calendar">
-            <h2>A Beautiful Calendar</h2>
+            <h2>Timence is A Beautiful Calendar</h2>
             <BigCalendar
                 className="calendar__big-calendar"
                 localizer={localizer}
