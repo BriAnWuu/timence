@@ -1,16 +1,15 @@
 import EventsApi from "./api";
 
-
-const getEvents = async ( api = EventsApi) => {
+const getEvents = async (api = EventsApi) => {
     const response = await api.getEvents();
     const events = response.text;
-    return events
-}
+    return events;
+};
 
 const getMockEvents = async (api = EventsApi) => {
     const response = await api.getMockEvents();
     const events = response.data;
-    return events
-}
+    return events;
+};
 
-export default { getEvents, getMockEvents }
+export default { getEvents, getMockEvents };
