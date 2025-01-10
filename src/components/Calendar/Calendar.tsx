@@ -3,11 +3,13 @@ import { getDay } from "date-fns/getDay";
 import { enUS } from "date-fns/locale/en-US";
 import { parse } from "date-fns/parse";
 import { startOfWeek } from "date-fns/startOfWeek";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { Calendar as BigCalendar, dateFnsLocalizer, type Event } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useDispatch, useSelector } from "react-redux";
+import EventsService from "../../api/events/service";
 import { deselectCurrentEvent, setCurrentDate, setCurrentEvent } from "../../state/currentEvent/currentEventSlice";
+import { fetchEvents } from "../../state/events/eventsSlice";
 import { RootState } from "../../state/store";
 import { CalendarEventInfo } from "../../ts/interfaces/event.interface";
 import { deserializeDate, serializeDate } from "../../utils/serializeDate";
@@ -36,6 +38,17 @@ function Calendar({ children }: PropsWithChildren) {
     // local states
     const [openAddEventModel, setOpenAddEventModal] = useState<boolean>(false);
     
+    useEffect(() => {
+        const getEvents = async () => {
+            try {
+                const fetchedEvents = await EventsService.getMockEvents();
+                dispatch(fetchEvents(fetchedEvents))
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        getEvents()
+    }, [])
 
     // handle functions
     const handleSelectEvent = (event: CalendarEventInfo) => {
@@ -54,7 +67,6 @@ function Calendar({ children }: PropsWithChildren) {
         setOpenAddEventModal(false)
         dispatch(deselectCurrentEvent())
     }
-
 
 
     return (

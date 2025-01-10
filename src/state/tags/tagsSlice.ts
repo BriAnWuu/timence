@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import mockTags from "../../api/mock/mockTags";
+import mockTags from "../../api/tags/mockTags";
 import { CategoryTag } from "../../ts/interfaces/tag.interface";
 import { generateId } from "../../utils/generateId";
 

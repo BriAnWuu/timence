@@ -26,7 +26,7 @@ function RandomFact() {
     }
 
     return (
-        <p>
+        <p className="day-schedule__random-fact">
            {fact} 
         </p>
     )
