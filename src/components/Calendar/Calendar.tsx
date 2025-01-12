@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 import EventsService from "../../api/events/service";
 import TagsService from "../../api/tags/service";
 import {
-    deselectCurrentEvent,
     setCurrentDate,
     setCurrentEvent,
 } from "../../state/currentEvent/currentEventSlice";
@@ -24,6 +23,7 @@ import { fetchTags } from "../../state/tags/tagsSlice";
 import { CalendarEventInfo } from "../../ts/interfaces/event.interface";
 import { deserializeDate, serializeDate } from "../../utils/serializeDate";
 import AddEventModal from "../AddEventModal/AddEventModal";
+import DeleteEventModal from "../DeleteEventModal/DeleteEventModal";
 import Loading from "../Loading/Loading";
 import "./Calendar.scss";
 
@@ -43,16 +43,19 @@ function Calendar({ children }: PropsWithChildren) {
     // redux states
     const events = useSelector((state: RootState) => state.events);
     const tags = useSelector((state: RootState) => state.tags);
+    const currentEvent = useSelector((state: RootState) => state.currentEvent);
     const dispatch = useDispatch();
 
     // local states
     const [openAddEventModel, setOpenAddEventModal] = useState<boolean>(false);
+    const [openDeleteEventModal, setOpenDeleteEventModal] =
+        useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
 
     // fetch data
     useEffect(() => {
-        const getEvents = async () => {
+        const fetchData = async () => {
             setLoading(true);
             try {
                 const [fetchedEvents, fetchedTags] = await Promise.all([
@@ -68,11 +71,13 @@ function Calendar({ children }: PropsWithChildren) {
                 setLoading(false);
             }
         };
-        getEvents();
+        fetchData();
     }, []);
 
     // handle functions
     const handleSelectEvent = (event: CalendarEventInfo) => {
+        console.log(event);
+        setOpenDeleteEventModal(true);
         dispatch(setCurrentEvent(serializeDate(event)));
     };
     const handleSelectSlot = (event: Event) => {
@@ -85,10 +90,6 @@ function Calendar({ children }: PropsWithChildren) {
                 })
             )
         );
-    };
-    const handleModalClose = () => {
-        setOpenAddEventModal(false);
-        dispatch(deselectCurrentEvent());
     };
 
     // render component
@@ -109,6 +110,9 @@ function Calendar({ children }: PropsWithChildren) {
     return (
         <section className="calendar">
             <h2 className="calendar__title">Timence is A Beautiful Calendar</h2>
+            <div>{currentEvent._id}</div>
+            <div>{currentEvent.start}</div>
+            <div>{currentEvent.end}</div>
             <BigCalendar
                 className="calendar__big-calendar"
                 localizer={localizer}
@@ -133,7 +137,11 @@ function Calendar({ children }: PropsWithChildren) {
             {children}
             <AddEventModal
                 open={openAddEventModel}
-                onModalClose={handleModalClose}
+                setModalOpen={setOpenAddEventModal}
+            />
+            <DeleteEventModal
+                open={openDeleteEventModal}
+                setModalOpen={setOpenDeleteEventModal}
             />
         </section>
     );

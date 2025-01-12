@@ -4,7 +4,10 @@
 .calendar {
     max-width: $MAX_CONTENT_WIDTH;
     margin-inline: auto;
-    // padding: calc($SPACING * 2);
+
+    &__title {
+        padding-block: calc($SPACING * 2);
+    }
 
     &__big-calendar {
         width: 100%;

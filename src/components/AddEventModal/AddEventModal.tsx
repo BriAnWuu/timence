@@ -9,7 +9,7 @@ import {
     DialogContentText,
     DialogTitle,
     Slide,
-    TextField
+    TextField,
 } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import {
@@ -17,14 +17,16 @@ import {
     Dispatch,
     forwardRef,
     HTMLAttributes,
+    MouseEvent,
     ReactElement,
     ReactNode,
     Ref,
     SetStateAction,
     SyntheticEvent,
-    useState
+    useState,
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { deselectCurrentEvent } from "../../state/currentEvent/currentEventSlice";
 import { addOneEvent } from "../../state/events/eventsSlice";
 import { RootState } from "../../state/store";
 import { CategoryTag } from "../../ts/interfaces/tag.interface";
@@ -34,22 +36,21 @@ import "./AddEventModal.scss";
 // modal animation transition properties
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
-      children: ReactElement<any, any>;
+        children: ReactElement<any, any>;
     },
-    ref: Ref<unknown>,
+    ref: Ref<unknown>
 ) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-  
 
 interface AddEventModalProps {
-    open: boolean
-    onModalClose: Dispatch<SetStateAction<void>>
+    open: boolean;
+    setModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-function AddEventModal({ open, onModalClose }: AddEventModalProps) {
+function AddEventModal({ open, setModalOpen }: AddEventModalProps) {
     // redux states
-    const currentEvent = useSelector((state: RootState) => state.currentEvent)
+    const currentEvent = useSelector((state: RootState) => state.currentEvent);
     const tags = useSelector((state: RootState) => state.tags);
     const dispatch = useDispatch();
 
@@ -57,37 +58,45 @@ function AddEventModal({ open, onModalClose }: AddEventModalProps) {
     const [description, setDescription] = useState<string>("");
     const [pendingTag, setPendingTag] = useState<CategoryTag | null>(null);
 
-
     // handle functions
     const handleModalClose = () => {
-        onModalClose()
-        setDescription("")
-        setPendingTag(null)
-    }
+        setModalOpen(false);
+        dispatch(deselectCurrentEvent());
+        setDescription("");
+        setPendingTag(null);
+    };
     const handleDescriptionChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setDescription(event.target.value)
-    }
-    const handleTagChange = (event: SyntheticEvent, value: CategoryTag | null, reason: AutocompleteChangeReason) => {
-        if (
-            event.type === "keydown" &&
-            reason === "removeOption"
-        ) return;
-        setPendingTag(value)
-    }
-    const handleSubmit = () => {
-        dispatch(addOneEvent({
-            title: description,
-            tagId: pendingTag?._id,
-            _id: generateId(),
-            start: currentEvent.start,
-            end: currentEvent.end,
-        }))
+        setDescription(event.target.value);
+    };
+    const handleTagChange = (
+        event: SyntheticEvent,
+        value: CategoryTag | null,
+        reason: AutocompleteChangeReason
+    ) => {
+        if (event.type === "keydown" && reason === "removeOption") return;
+        setPendingTag(value);
+    };
+    const handleSubmit = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
 
-        handleModalClose()
-    }
+        dispatch(
+            addOneEvent({
+                title: description,
+                tagId: pendingTag?._id,
+                _id: generateId(),
+                start: currentEvent.start,
+                end: currentEvent.end,
+            })
+        );
+
+        handleModalClose();
+    };
 
     // autocomplete custom render: add color box
-    const renderOptions = (props: HTMLAttributes<HTMLLIElement>, option: CategoryTag): ReactNode => {
+    const renderOptions = (
+        props: HTMLAttributes<HTMLLIElement>,
+        option: CategoryTag
+    ): ReactNode => {
         const { key, ...optionProps } = props;
         return (
             <li key={key} {...optionProps}>
@@ -97,38 +106,40 @@ function AddEventModal({ open, onModalClose }: AddEventModalProps) {
                         width: 14,
                         height: 14,
                         flexShrink: 0,
-                        borderRadius: '3px',
+                        borderRadius: "3px",
                         mr: 1,
-                        mt: '2px',
+                        mt: "2px",
                     }}
-                    style={{ backgroundColor: option.color}}
+                    style={{ backgroundColor: option.color }}
                 />
-                <Box component="span">
-                    {option.title}
-                </Box>
+                <Box component="span">{option.title}</Box>
             </li>
-        )
-    }
+        );
+    };
 
     const formValid = (): boolean => {
         if (!description.trim()) {
-            return false
+            return false;
         }
-        return true
-    }
-    
+        return true;
+    };
+
     return (
-        <Dialog 
+        <Dialog
             open={open}
             onClose={handleModalClose}
             TransitionComponent={Transition}
             keepMounted
             aria-description="add event modal"
+            aria-hidden={false}
         >
             <DialogTitle>Add Event</DialogTitle>
             <DialogContent>
                 <div className="add-event-modal__content-container">
-                    <DialogContentText>Thanks for using Timence. Fill the information below to add an event.</DialogContentText>
+                    <DialogContentText>
+                        Thanks for using Timence. Fill the information below to
+                        add an event.
+                    </DialogContentText>
                     <Box component="form">
                         <div className="add-event-modal__input-container">
                             <TextField
@@ -148,10 +159,10 @@ function AddEventModal({ open, onModalClose }: AddEventModalProps) {
                                 renderOption={renderOptions}
                                 value={pendingTag}
                                 onChange={handleTagChange}
-                                renderInput={(params) =>(
+                                renderInput={(params) => (
                                     <TextField
-                                        {...params} 
-                                        label="Tags" 
+                                        {...params}
+                                        label="Tags"
                                         variant="filled"
                                     />
                                 )}
@@ -162,7 +173,7 @@ function AddEventModal({ open, onModalClose }: AddEventModalProps) {
                 </div>
             </DialogContent>
             <DialogActions>
-                <Button 
+                <Button
                     variant="contained"
                     color="success"
                     disabled={!formValid()}
@@ -170,7 +181,7 @@ function AddEventModal({ open, onModalClose }: AddEventModalProps) {
                 >
                     Add
                 </Button>
-                <Button 
+                <Button
                     variant="outlined"
                     color="error"
                     onClick={handleModalClose}
@@ -179,7 +190,7 @@ function AddEventModal({ open, onModalClose }: AddEventModalProps) {
                 </Button>
             </DialogActions>
         </Dialog>
-    )
-};
+    );
+}
 
 export default AddEventModal;
