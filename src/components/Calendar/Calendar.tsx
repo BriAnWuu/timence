@@ -43,7 +43,6 @@ function Calendar({ children }: PropsWithChildren) {
     // redux states
     const events = useSelector((state: RootState) => state.events);
     const tags = useSelector((state: RootState) => state.tags);
-    const currentEvent = useSelector((state: RootState) => state.currentEvent);
     const dispatch = useDispatch();
 
     // local states
@@ -110,9 +109,6 @@ function Calendar({ children }: PropsWithChildren) {
     return (
         <section className="calendar">
             <h2 className="calendar__title">Timence is A Beautiful Calendar</h2>
-            <div>{currentEvent._id}</div>
-            <div>{currentEvent.start}</div>
-            <div>{currentEvent.end}</div>
             <BigCalendar
                 className="calendar__big-calendar"
                 localizer={localizer}

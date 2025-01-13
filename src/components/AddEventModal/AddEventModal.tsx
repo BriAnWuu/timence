@@ -8,19 +8,15 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
-    Slide,
     TextField,
 } from "@mui/material";
-import { TransitionProps } from "@mui/material/transitions";
+
 import {
     ChangeEvent,
     Dispatch,
-    forwardRef,
     HTMLAttributes,
     MouseEvent,
-    ReactElement,
     ReactNode,
-    Ref,
     SetStateAction,
     SyntheticEvent,
     useState,
@@ -31,17 +27,8 @@ import { addOneEvent } from "../../state/events/eventsSlice";
 import { RootState } from "../../state/store";
 import { CategoryTag } from "../../ts/interfaces/tag.interface";
 import { generateId } from "../../utils/generateId";
+import { Transition } from "../../utils/modal";
 import "./AddEventModal.scss";
-
-// modal animation transition properties
-const Transition = forwardRef(function Transition(
-    props: TransitionProps & {
-        children: ReactElement<any, any>;
-    },
-    ref: Ref<unknown>
-) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
 
 interface AddEventModalProps {
     open: boolean;
