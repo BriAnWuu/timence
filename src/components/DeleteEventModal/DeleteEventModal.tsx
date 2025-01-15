@@ -11,7 +11,7 @@ import {
     DialogTitle,
     Stack,
 } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deselectCurrentEvent } from "../../state/currentEvent/currentEventSlice";
 import { deleteEvent } from "../../state/events/eventsSlice";
@@ -27,7 +27,7 @@ interface DeleteEventModalProps {
 }
 interface DetailItemProps {
     icon?: any;
-    text?: string | any;
+    text?: string | ReactNode;
     color?: string | null;
 }
 
