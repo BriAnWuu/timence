@@ -1,3 +1,4 @@
+import { Box, Button, ButtonGroup } from "@mui/material";
 import { format } from "date-fns/format";
 import { getDay } from "date-fns/getDay";
 import { enUS } from "date-fns/locale/en-US";
@@ -23,6 +24,7 @@ import { fetchTags } from "../../state/tags/tagsSlice";
 import { CalendarEventInfo } from "../../ts/interfaces/event.interface";
 import { deserializeDate, serializeDate } from "../../utils/serializeDate";
 import AddEventModal from "../AddEventModal/AddEventModal";
+import AddTagModal from "../AddTagModal/AddTagModal";
 import DeleteEventModal from "../DeleteEventModal/DeleteEventModal";
 import Loading from "../Loading/Loading";
 import "./Calendar.scss";
@@ -46,6 +48,7 @@ function Calendar({ children }: PropsWithChildren) {
     const dispatch = useDispatch();
 
     // local states
+    const [openAddTagModel, setOpenAddTagModal] = useState<boolean>(false);
     const [openAddEventModel, setOpenAddEventModal] = useState<boolean>(false);
     const [openDeleteEventModal, setOpenDeleteEventModal] =
         useState<boolean>(false);
@@ -75,7 +78,6 @@ function Calendar({ children }: PropsWithChildren) {
 
     // handle functions
     const handleSelectEvent = (event: CalendarEventInfo) => {
-        console.log(event);
         setOpenDeleteEventModal(true);
         dispatch(setCurrentEvent(serializeDate(event)));
     };
@@ -109,6 +111,16 @@ function Calendar({ children }: PropsWithChildren) {
     return (
         <section className="calendar">
             <h2 className="calendar__title">Timence is A Beautiful Calendar</h2>
+            <Box sx={{ display: "flex", marginBottom: 1 }}>
+                <ButtonGroup size="small">
+                    <Button
+                        onClick={() => setOpenAddTagModal(true)}
+                        color="info"
+                    >
+                        Create Tag
+                    </Button>
+                </ButtonGroup>
+            </Box>
             <BigCalendar
                 className="calendar__big-calendar"
                 localizer={localizer}
@@ -131,6 +143,10 @@ function Calendar({ children }: PropsWithChildren) {
                 }}
             />
             {children}
+            <AddTagModal
+                open={openAddTagModel}
+                setModalOpen={setOpenAddTagModal}
+            />
             <AddEventModal
                 open={openAddEventModel}
                 setModalOpen={setOpenAddEventModal}
