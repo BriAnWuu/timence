@@ -28,10 +28,12 @@ export interface SerializedEvent extends Omit<Event, "start" | "end"> {
     _id?: string;
     start: number;
     end: number;
+    slots?: number[];
 }
 
 export interface CurrentEvent {
     _id?: string;
     start?: number;
     end?: number;
+    slots?: number[];
 }

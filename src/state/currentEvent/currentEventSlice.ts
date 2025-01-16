@@ -9,6 +9,7 @@ const initialState: CurrentEvent = {
     _id: undefined,
     start: undefined,
     end: undefined,
+    slots: undefined,
 };
 
 const currentEventSlice = createSlice({
@@ -26,10 +27,11 @@ const currentEventSlice = createSlice({
             // state.allDay = allDay
         },
         setCurrentDate: (state, action: PayloadAction<SerializedEvent>) => {
-            const { start, end, ...rest } = action.payload;
+            const { start, end, slots, ...rest } = action.payload;
             state._id = undefined;
             state.start = start;
             state.end = end;
+            state.slots = slots;
         },
         deselectCurrentEvent: () => {
             return initialState;

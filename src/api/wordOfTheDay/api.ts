@@ -10,12 +10,13 @@ const apiClient = axios.create({
 });
 
 // End points
-const getWordOfTheDay = async () => {
+const getWordOfTheDay = async (date?: string) => {
     const response = await apiClient.request({
         url: "/words.json/wordOfTheDay",
         method: "GET",
         params: {
             api_key: import.meta.env.VITE_APP_API_KEY_WORDOFTHEDAY,
+            date: date,
         },
     });
     return response;

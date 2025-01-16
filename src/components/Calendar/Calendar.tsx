@@ -78,10 +78,12 @@ function Calendar({ children }: PropsWithChildren) {
 
     // handle functions
     const handleSelectEvent = (event: CalendarEventInfo) => {
+        console.log(event);
         setOpenDeleteEventModal(true);
         dispatch(setCurrentEvent(serializeDate(event)));
     };
     const handleSelectSlot = (event: Event) => {
+        console.log(event);
         setOpenAddEventModal(true);
         dispatch(
             setCurrentDate(
