@@ -19,7 +19,7 @@ const getTags = async () => {
         url: "/tags/endpoint",
         method: "GET",
     });
-    return response.data;
+    return response;
 };
 
 const getMockTags = async (): Promise<MockTagsApi> => {

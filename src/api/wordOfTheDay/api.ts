@@ -1,0 +1,26 @@
+import axios from "axios";
+
+// API layer
+const apiClient = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_WORDOFTHEDAY,
+    timeout: 1000,
+    headers: {
+        "Content-Type": "application/json",
+    },
+});
+
+// End points
+const getWordOfTheDay = async () => {
+    const response = await apiClient.request({
+        url: "/words.json/wordOfTheDay",
+        method: "GET",
+        params: {
+            api_key: import.meta.env.VITE_APP_API_KEY_WORDOFTHEDAY,
+        },
+    });
+    return response;
+};
+
+export default {
+    getWordOfTheDay,
+};

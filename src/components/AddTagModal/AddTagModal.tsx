@@ -69,6 +69,7 @@ function AddTagModal({ open, setModalOpen }: AddTagModalProps) {
                     color="success"
                     disabled={tagTitle.trim().length === 0}
                     onClick={handleSubmit}
+                    type="submit"
                 >
                     Add
                 </Button>

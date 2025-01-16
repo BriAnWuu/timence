@@ -1,5 +1,5 @@
 import { Box, CircularProgress } from "@mui/material";
-import "./Loading.scss";
+// import "./Loading.scss";
 
 function Loading() {
     return (

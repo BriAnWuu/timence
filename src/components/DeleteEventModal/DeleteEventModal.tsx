@@ -19,7 +19,7 @@ import { RootState } from "../../state/store";
 import { getEventDetail, getTagColor } from "../../utils/eventDetail";
 import { formatDate } from "../../utils/formatDate";
 import { Transition } from "../../utils/modal";
-import "./DeleteEventModal.scss";
+// import "./DeleteEventModal.scss";
 
 interface DeleteEventModalProps {
     open: boolean;
@@ -67,17 +67,12 @@ function DeleteEventModal({ open, setModalOpen }: DeleteEventModalProps) {
         >
             <DialogTitle>Event Info</DialogTitle>
             <DialogContent sx={{ minWidth: "40vw" }}>
-                {/* <DialogContentText>
-                    Thanks for using Timence. Use the action below to
-                    edit/delete an event.
-                </DialogContentText> */}
                 <Stack
                     spacing={1}
                     direction="column"
                     sx={{
                         justifyContent: "flex-start",
                         alignItems: "flex-start",
-                        // mt: 2,
                     }}
                 >
                     <DetailItem
@@ -111,6 +106,7 @@ function DeleteEventModal({ open, setModalOpen }: DeleteEventModalProps) {
                     variant="contained"
                     color="error"
                     onClick={handleDelete}
+                    type="submit"
                 >
                     Delete
                 </Button>
@@ -133,9 +129,7 @@ function DetailItem({ icon, text, color }: DetailItemProps) {
                     alignItems: "center",
                 }}
             >
-                {icon ? (
-                    icon
-                ) : (
+                {icon ?? (
                     <Box
                         component="div"
                         sx={{

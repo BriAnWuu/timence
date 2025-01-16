@@ -140,6 +140,7 @@ function AddEventModal({ open, setModalOpen }: AddEventModalProps) {
                     color="success"
                     disabled={!formValid()}
                     onClick={handleSubmit}
+                    type="submit"
                 >
                     Add
                 </Button>
@@ -159,7 +160,7 @@ export default AddEventModal;
 
 // autocomplete custom render: add color box
 const renderOptions = (
-    props: HTMLAttributes<HTMLLIElement>,
+    props: HTMLAttributes<HTMLLIElement> & { key: any },
     option: CategoryTag
 ): ReactNode => {
     const { key, ...optionProps } = props;
