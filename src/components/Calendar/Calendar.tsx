@@ -5,24 +5,25 @@ import { enUS } from "date-fns/locale/en-US";
 import { parse } from "date-fns/parse";
 import { startOfWeek } from "date-fns/startOfWeek";
 import { PropsWithChildren, useEffect, useState } from "react";
-import {
-    Calendar as BigCalendar,
-    dateFnsLocalizer,
-    type Event,
-} from "react-big-calendar";
+import { Calendar as BigCalendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useDispatch, useSelector } from "react-redux";
 import EventsService from "../../api/events/service";
 import TagsService from "../../api/tags/service";
 import {
-    setCurrentDate,
     setCurrentEvent,
+    setCurrentSlot,
 } from "../../state/currentEvent/currentEventSlice";
 import { fetchEvents } from "../../state/events/eventsSlice";
 import { RootState } from "../../state/store";
 import { fetchTags } from "../../state/tags/tagsSlice";
 import { CalendarEventInfo } from "../../ts/interfaces/event.interface";
-import { deserializeDate, serializeDate } from "../../utils/serializeDate";
+import { Slot } from "../../ts/interfaces/slot.interface";
+import {
+    deserializeDate,
+    serializeDate,
+    serializeDateArray,
+} from "../../utils/serializeDate";
 import AddEventModal from "../AddEventModal/AddEventModal";
 import AddTagModal from "../AddTagModal/AddTagModal";
 import DeleteEventModal from "../DeleteEventModal/DeleteEventModal";
@@ -82,17 +83,10 @@ function Calendar({ children }: PropsWithChildren) {
         setOpenDeleteEventModal(true);
         dispatch(setCurrentEvent(serializeDate(event)));
     };
-    const handleSelectSlot = (event: Event) => {
+    const handleSelectSlot = (event: Slot) => {
         console.log(event);
         setOpenAddEventModal(true);
-        dispatch(
-            setCurrentDate(
-                serializeDate({
-                    start: event.start,
-                    end: event.end,
-                })
-            )
-        );
+        dispatch(setCurrentSlot(serializeDate(serializeDateArray(event))));
     };
 
     // render component
