@@ -3,16 +3,11 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { PropsWithChildren, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../state/store";
-// import { CurrentEvent } from "../../ts/interfaces/event.interface";
 import { formatDate, formatDateDash } from "../../utils/formatDate";
 import WordOfTheDay from "../WordOfTheDay/WordOfTheDay";
 import "./DaySchedule.scss";
 
-interface DayScheduleProps extends PropsWithChildren {
-    // currentEvent: CurrentEvent;
-}
-
-function DaySchedule({ children }: DayScheduleProps) {
+function DaySchedule({ children }: PropsWithChildren) {
     const currentEvent = useSelector((state: RootState) => state.currentEvent);
 
     const [page, setPage] = useState<number>(0);
