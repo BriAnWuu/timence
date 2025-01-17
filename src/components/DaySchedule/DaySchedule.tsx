@@ -1,14 +1,18 @@
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../state/store";
+// import { CurrentEvent } from "../../ts/interfaces/event.interface";
 import { formatDate, formatDateDash } from "../../utils/formatDate";
-import RandomFact from "../RandomFact/RandomFact";
 import WordOfTheDay from "../WordOfTheDay/WordOfTheDay";
 import "./DaySchedule.scss";
 
-function DaySchedule({}) {
+interface DayScheduleProps extends PropsWithChildren {
+    // currentEvent: CurrentEvent;
+}
+
+function DaySchedule({ children }: DayScheduleProps) {
     const currentEvent = useSelector((state: RootState) => state.currentEvent);
 
     const [page, setPage] = useState<number>(0);
@@ -23,19 +27,17 @@ function DaySchedule({}) {
     };
 
     if (!currentDates) return;
+    if (pages && page >= pages) setPage(0);
     const title = formatDate(currentDates[page]);
     const pageDate = formatDateDash(currentDates[page]);
     return (
         <div className="day-schedule">
             <section className="day-schedule__schedule-page">
-                <div
-                    key={currentEvent.start}
-                    className="day-schedule__title-container"
-                >
+                <div key={title} className="day-schedule__title-container">
                     <NavigateBeforeIcon
                         onClick={() => handleNavigate(-1)}
                         style={{
-                            visibility: page === 0 ? "hidden" : "visible",
+                            visibility: page <= 0 ? "hidden" : "visible",
                         }}
                     />
                     <h3 className="day-schedule__title">{title}</h3>
@@ -47,7 +49,7 @@ function DaySchedule({}) {
                         }}
                     />
                 </div>
-                <RandomFact />
+                {children}
                 <WordOfTheDay key={pageDate} currentDate={pageDate} />
             </section>
         </div>
