@@ -4,15 +4,10 @@
 .day-schedule {
     max-width: $MAX_CONTENT_WIDTH;
     margin-inline: auto;
-    overflow: scroll;
 
-    &__scroller {
-        display: flex;
-        width: fit-content;
-    }
-
-    &__scroller-item {
+    &__schedule-page {
         width: calc(100vw - $BODY_PADDING * 2);
+        max-width: $MAX_CONTENT_WIDTH;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -20,9 +15,12 @@
     }
 
     &__title-container {
+        min-width: 30%;
+        max-width: 300rem;
         align-self: center;
         margin-block: calc($SPACING * 2);
         display: flex;
+        justify-content: space-between;
         align-items: center;
     }
 }

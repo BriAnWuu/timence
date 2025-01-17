@@ -26,7 +26,7 @@ const getMockTags = async (): Promise<MockTagsApi> => {
     const tags = mockTags;
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            const success = Math.random() > 0.1;
+            const success = Math.random() > 0.05;
 
             if (success) {
                 resolve({

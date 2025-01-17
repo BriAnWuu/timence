@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import WordOfTheDayService from "../../api/wordOfTheDay/service";
 import { firstLetterUpperCase } from "../../utils/formatString";
+import { storeWordData, wordInSessionlStorage } from "../../utils/localStorage";
 import Loading from "../Loading/Loading";
 import "./WordOfTheDay.scss";
 
-interface WordData {
+export interface WordData {
     [key: string]: any;
     definitions: WordData[];
 }
@@ -14,14 +15,29 @@ interface WordOfTheDayProps {
 }
 
 // use testing date with multi definition
-function WordOfTheDay({ currentDate = "2024-09-30" }: WordOfTheDayProps) {
+function WordOfTheDay({ currentDate }: WordOfTheDayProps) {
     const [word, setWord] = useState<WordData | null | undefined>(undefined);
     const [hasError, setHasError] = useState<boolean>(false);
 
     useEffect(() => {
-        WordOfTheDayService.getWordOfTheDay(currentDate)
-            .then((wordData) => setWord(wordData))
-            .catch(() => setHasError(true));
+        const foundWord = wordInSessionlStorage(currentDate);
+
+        if (foundWord) {
+            setWord(foundWord);
+            console.log("found in storage");
+        } else {
+            WordOfTheDayService.getWordOfTheDay(currentDate)
+                .then((wordData) => {
+                    setWord(wordData);
+                    if (wordData) {
+                        storeWordData(wordData);
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    setHasError(true);
+                });
+        }
     }, []);
 
     // render  component
