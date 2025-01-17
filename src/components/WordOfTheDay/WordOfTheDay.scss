@@ -5,4 +5,15 @@
     &__word-card {
         margin-block: calc($SPACING * 2);
     }
+
+    &__definitions {
+        display: flex;
+        gap: calc($SPACING);
+        padding: calc($SPACING / 2);
+    }
+
+    &__part-of-speech {
+        border-right: 1px solid gray;
+        padding-right: calc($SPACING);
+    }
 }

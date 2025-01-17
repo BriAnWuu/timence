@@ -15,15 +15,28 @@ function RandomFact() {
 
     // render  component
     if (hasError) {
-        return <div>Error occurred when fetching random facts</div>;
+        return (
+            <div className="day-schedule__fact-card">
+                Error occurred when fetching random facts
+            </div>
+        );
     }
     if (fact === undefined) {
         return <Loading />;
     }
     if (fact === null || fact === "") {
-        return <div>No random facts for you today</div>;
+        return (
+            <div className="day-schedule__fact-card">
+                No random facts for you today
+            </div>
+        );
     }
-    return <p className="day-schedule__random-fact">{fact}</p>;
+    return (
+        <div className="day-schedule__fact-card">
+            <p>Do you know: </p>
+            <p className="day-schedule__random-fact">{fact}</p>
+        </div>
+    );
 }
 
 export default RandomFact;
