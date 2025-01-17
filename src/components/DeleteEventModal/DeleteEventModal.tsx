@@ -45,14 +45,14 @@ function DeleteEventModal({ open, setModalOpen }: DeleteEventModalProps) {
     const handleModalClose = () => {
         setModalOpen(false);
         setTimeout(() => {
-            dispatch(deselectCurrentEvent());
+            // dispatch(deselectCurrentEvent());
         }, 300);
     };
     const handleDelete = () => {
         setModalOpen(false);
         setTimeout(() => {
             dispatch(deleteEvent(eventDetail?._id || "-1"));
-            dispatch(deselectCurrentEvent());
+            // dispatch(deselectCurrentEvent());
         }, 300);
     };
 

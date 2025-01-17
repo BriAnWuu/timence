@@ -4,4 +4,25 @@
 .day-schedule {
     max-width: $MAX_CONTENT_WIDTH;
     margin-inline: auto;
+    overflow: scroll;
+
+    &__scroller {
+        display: flex;
+        width: fit-content;
+    }
+
+    &__scroller-item {
+        width: calc(100vw - $BODY_PADDING * 2);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    &__title-container {
+        align-self: center;
+        margin-block: calc($SPACING * 2);
+        display: flex;
+        align-items: center;
+    }
 }

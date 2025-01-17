@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import WordOfTheDayService from "../../api/wordOfTheDay/service";
+import { firstLetterUpperCase } from "../../utils/formatString";
 import Loading from "../Loading/Loading";
 import "./WordOfTheDay.scss";
 
@@ -37,14 +38,14 @@ function WordOfTheDay({ currentDate = "2024-09-30" }: WordOfTheDayProps) {
     if (word === null) {
         return (
             <div className="day-schedule__word-card">
-                No words for you today
+                No words for you today ({currentDate})
             </div>
         );
     }
     return (
         <div className="day-schedule__word-card">
             <div>
-                <p>{word.word}</p>
+                <p>{firstLetterUpperCase(word.word)}</p>
             </div>
             <ul>
                 {word.definitions.map((def, idx) => (
@@ -53,7 +54,7 @@ function WordOfTheDay({ currentDate = "2024-09-30" }: WordOfTheDayProps) {
                         <p className="day-schedule__part-of-speech">
                             {def.partOfSpeech}
                         </p>
-                        <p>{def.text}</p>
+                        <p>{firstLetterUpperCase(def.text)}</p>
                     </li>
                 ))}
             </ul>

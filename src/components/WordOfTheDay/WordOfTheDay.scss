@@ -9,7 +9,7 @@
     &__definitions {
         display: flex;
         gap: calc($SPACING);
-        padding: calc($SPACING / 2);
+        padding: calc($SPACING / 2) calc($SPACING / 2) calc($SPACING / 2) 0;
     }
 
     &__part-of-speech {

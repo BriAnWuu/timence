@@ -24,7 +24,7 @@ const currentEventSlice = createSlice({
             state._id = _id;
             state.start = start;
             state.end = end;
-            state.slots = undefined;
+            state.slots = [start];
             // state.allDay = allDay
         },
         setCurrentSlot: (state, action: PayloadAction<SerializedEvent>) => {

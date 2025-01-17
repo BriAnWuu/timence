@@ -1,5 +1,6 @@
 import {
     CalendarEventInfo,
+    CurrentEvent,
     ReduxCalendarEventInfo,
 } from "../ts/interfaces/event.interface";
 import { Slot } from "../ts/interfaces/slot.interface";
@@ -13,9 +14,9 @@ export const serializeDate = (event: any) => {
     };
 };
 
-export const serializeDateArray = (event: Slot) => {
+export const serializeDateArray = (event: Slot | CurrentEvent) => {
     const { slots, ...newCopy } = event;
-    const newSlots = slots.map((slot) => {
+    const newSlots = slots?.map((slot) => {
         if (typeof slot !== "number") {
             return slot.getTime();
         }

@@ -2,5 +2,5 @@
 @use "../../styles/partials/mixins" as *;
 
 main {
-    padding-inline: calc($SPACING * 2);
+    padding-inline: $BODY_PADDING;
 }

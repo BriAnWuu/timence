@@ -48,7 +48,7 @@ function AddEventModal({ open, setModalOpen }: AddEventModalProps) {
     // handle functions
     const handleModalClose = () => {
         setModalOpen(false);
-        dispatch(deselectCurrentEvent());
+        // dispatch(deselectCurrentEvent());
         setDescription("");
         setPendingTag(null);
     };
