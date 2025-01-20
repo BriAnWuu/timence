@@ -22,7 +22,6 @@ import {
     useState,
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deselectCurrentEvent } from "../../state/currentEvent/currentEventSlice";
 import { addOneEvent } from "../../state/events/eventsSlice";
 import { RootState } from "../../state/store";
 import { CategoryTag } from "../../ts/interfaces/tag.interface";
