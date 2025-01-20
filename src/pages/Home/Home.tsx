@@ -8,6 +8,7 @@ function Home() {
         <main>
             <Calendar />
             <DaySchedule>
+                {/* don't refetch random fact when date change */}
                 <RandomFact />
             </DaySchedule>
         </main>

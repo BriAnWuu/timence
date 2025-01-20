@@ -2,33 +2,25 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
 import {
-    Box,
     Button,
     Dialog,
     DialogActions,
     DialogContent,
-    DialogContentText,
     DialogTitle,
     Stack,
 } from "@mui/material";
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deselectCurrentEvent } from "../../state/currentEvent/currentEventSlice";
 import { deleteEvent } from "../../state/events/eventsSlice";
 import { RootState } from "../../state/store";
 import { getEventDetail, getTagColor } from "../../utils/eventDetail";
 import { formatDate } from "../../utils/formatDate";
 import { Transition } from "../../utils/modal";
-// import "./DeleteEventModal.scss";
+import ItemDetailWithIcon from "../ItemDetailWithIcon/ItemDetailWithIcon";
 
 interface DeleteEventModalProps {
     open: boolean;
     setModalOpen: Dispatch<SetStateAction<boolean>>;
-}
-interface DetailItemProps {
-    icon?: any;
-    text?: string | ReactNode;
-    color?: string | null;
 }
 
 function DeleteEventModal({ open, setModalOpen }: DeleteEventModalProps) {
@@ -44,15 +36,11 @@ function DeleteEventModal({ open, setModalOpen }: DeleteEventModalProps) {
     // handle functions
     const handleModalClose = () => {
         setModalOpen(false);
-        setTimeout(() => {
-            // dispatch(deselectCurrentEvent());
-        }, 300);
     };
     const handleDelete = () => {
         setModalOpen(false);
         setTimeout(() => {
             dispatch(deleteEvent(eventDetail?._id || "-1"));
-            // dispatch(deselectCurrentEvent());
         }, 300);
     };
 
@@ -75,19 +63,19 @@ function DeleteEventModal({ open, setModalOpen }: DeleteEventModalProps) {
                         alignItems: "flex-start",
                     }}
                 >
-                    <DetailItem
+                    <ItemDetailWithIcon
                         color={getTagColor(eventDetail?.tagId, tags)}
                         text={eventDetail?.title}
                     />
-                    <DetailItem
+                    <ItemDetailWithIcon
                         icon={<AccessTimeIcon />}
                         text={formatDate(eventDetail?.start)}
                     />
-                    <DetailItem
+                    <ItemDetailWithIcon
                         icon={<PeopleAltOutlinedIcon />}
                         text={"add guests"}
                     />
-                    <DetailItem
+                    <ItemDetailWithIcon
                         icon={<RoomOutlinedIcon />}
                         text={"add location"}
                     />
@@ -116,33 +104,3 @@ function DeleteEventModal({ open, setModalOpen }: DeleteEventModalProps) {
 }
 
 export default DeleteEventModal;
-
-function DetailItem({ icon, text, color }: DetailItemProps) {
-    return (
-        <Stack spacing={2} direction="row" sx={{ alignItems: "center" }}>
-            <Box
-                sx={{
-                    width: 24,
-                    height: 24,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
-                {icon ?? (
-                    <Box
-                        component="div"
-                        sx={{
-                            width: 14,
-                            height: 14,
-                            flexShrink: 0,
-                            borderRadius: "3px",
-                        }}
-                        style={{ backgroundColor: color ? color : "#06448f" }}
-                    />
-                )}
-            </Box>
-            <DialogContentText>{text}</DialogContentText>
-        </Stack>
-    );
-}

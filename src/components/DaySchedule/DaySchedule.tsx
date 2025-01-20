@@ -4,27 +4,33 @@ import { PropsWithChildren, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../state/store";
 import { formatDate, formatDateDash } from "../../utils/formatDate";
+import EventList from "../EventList/EventList";
 import WordOfTheDay from "../WordOfTheDay/WordOfTheDay";
 import "./DaySchedule.scss";
 
 function DaySchedule({ children }: PropsWithChildren) {
+    // redux states
     const currentEvent = useSelector((state: RootState) => state.currentEvent);
 
+    // local stage
+    // display in page format when multiple time slots selected
     const [page, setPage] = useState<number>(0);
 
-    const currentDates: number[] | undefined = currentEvent.slots;
-    const pages: number | undefined = currentDates?.length;
-
+    // handle functions
     const handleNavigate = (navPage: number) => {
         if (!pages) return;
         const newPage = Math.max(0, Math.min(page + navPage, pages - 1));
         setPage(newPage);
     };
 
+    // render component
+    const currentDates: number[] | undefined = currentEvent.slots;
+    const pages: number | undefined = currentDates?.length;
+
     if (!currentDates) return;
     if (pages && page >= pages) setPage(0);
+    const targetDate = currentDates[page];
     const title = formatDate(currentDates[page]);
-    const pageDate = formatDateDash(currentDates[page]);
     return (
         <div className="day-schedule">
             <section className="day-schedule__schedule-page">
@@ -45,7 +51,11 @@ function DaySchedule({ children }: PropsWithChildren) {
                     />
                 </div>
                 {children}
-                <WordOfTheDay key={pageDate} currentDate={pageDate} />
+                <EventList key={targetDate} currentDate={targetDate} />
+                <WordOfTheDay
+                    key={targetDate}
+                    currentDate={formatDateDash(targetDate)}
+                />
             </section>
         </div>
     );
