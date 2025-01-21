@@ -30,7 +30,7 @@ function DaySchedule({ children }: PropsWithChildren) {
     if (!currentDates) return;
     if (pages && page >= pages) setPage(0);
     const targetDate = currentDates[page];
-    const title = formatDate(currentDates[page]);
+    const title = formatDate(targetDate);
     return (
         <div className="day-schedule">
             <section className="day-schedule__schedule-page">
@@ -51,11 +51,11 @@ function DaySchedule({ children }: PropsWithChildren) {
                     />
                 </div>
                 {children}
-                <EventList key={targetDate} currentDate={targetDate} />
-                <WordOfTheDay
-                    key={targetDate}
-                    currentDate={formatDateDash(targetDate)}
-                />
+
+                <div key={targetDate}>
+                    <EventList currentDate={targetDate} />
+                    <WordOfTheDay currentDate={formatDateDash(targetDate)} />
+                </div>
             </section>
         </div>
     );

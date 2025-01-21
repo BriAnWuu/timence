@@ -1,11 +1,13 @@
 import { ReduxCalendarEventInfo } from "../../ts/interfaces/event.interface";
+import { getDates } from "../../utils/adjustMockDataDate";
 
+const { year, month } = getDates();
 
 const mockEvents: ReduxCalendarEventInfo[] = [
     {
         title: "Lunch Party at Midtown",
-        start: new Date("2025-01-05").getTime(),
-        end: new Date("2025-01-05").getTime(),
+        start: new Date(year, month, 5).getTime(),
+        end: new Date(year, month, 5).getTime(),
         allDay: true,
         _id: "1",
         // description: "Lunch Party at Midtown by Google",
@@ -13,8 +15,8 @@ const mockEvents: ReduxCalendarEventInfo[] = [
     },
     {
         title: "Meeting with Sam",
-        start: new Date("2025-01-05").getTime(),
-        end: new Date("2025-01-05").getTime(),
+        start: new Date(year, month, 5).getTime(),
+        end: new Date(year, month, 5).getTime(),
         allDay: true,
         _id: "2",
         // description: "Meeting with Sam on Google Meet",
@@ -22,8 +24,8 @@ const mockEvents: ReduxCalendarEventInfo[] = [
     },
     {
         title: "Dental appointment",
-        start: new Date("2025-01-07").getTime(),
-        end: new Date("2025-01-07").getTime(),
+        start: new Date(year, month, 7).getTime(),
+        end: new Date(year, month, 7).getTime(),
         allDay: true,
         _id: "3",
         // description: "Dental appointment at 404 Main St",
@@ -31,8 +33,8 @@ const mockEvents: ReduxCalendarEventInfo[] = [
     },
     {
         title: "Dinner at Toronto Blue",
-        start: new Date("2025-01-08").getTime(),
-        end: new Date("2025-01-08").getTime(),
+        start: new Date(year, month, 8).getTime(),
+        end: new Date(year, month, 8).getTime(),
         allDay: true,
         _id: "4",
         // description: "Dinner at Toronto Blue",
@@ -40,8 +42,8 @@ const mockEvents: ReduxCalendarEventInfo[] = [
     },
     {
         title: "Medication",
-        start: new Date("2025-01-08").getTime(),
-        end: new Date("2025-01-10").getTime(),
+        start: new Date(year, month, 8).getTime(),
+        end: new Date(year, month, 10, 23, 59).getTime(),
         allDay: true,
         _id: "5",
         // description: "Medication",
@@ -49,8 +51,8 @@ const mockEvents: ReduxCalendarEventInfo[] = [
     },
     {
         title: "Dinner at Toronto Blue",
-        start: new Date("2025-01-08").getTime(),
-        end: new Date("2025-01-08").getTime(),
+        start: new Date(year, month, 8).getTime(),
+        end: new Date(year, month, 8).getTime(),
         allDay: true,
         _id: "6",
         // description: "Dinner at Toronto Blue",
@@ -58,8 +60,8 @@ const mockEvents: ReduxCalendarEventInfo[] = [
     },
     {
         title: "Dinner at Toronto Blue",
-        start: new Date("2025-01-08").getTime(),
-        end: new Date("2025-01-08").getTime(),
+        start: new Date(year, month, 8).getTime(),
+        end: new Date(year, month, 8).getTime(),
         allDay: true,
         _id: "7",
         // description: "Dinner at Toronto Blue",
@@ -67,14 +69,13 @@ const mockEvents: ReduxCalendarEventInfo[] = [
     },
     {
         title: "Dinner at Toronto Blue",
-        start: new Date("2025-01-08").getTime(),
-        end: new Date("2025-01-08").getTime(),
+        start: new Date(year, month, 8).getTime(),
+        end: new Date(year, month, 8).getTime(),
         allDay: true,
         _id: "8",
         // description: "Dinner at Toronto Blue",
         // tagId?: string
     },
-]
-
+];
 
 export default mockEvents;

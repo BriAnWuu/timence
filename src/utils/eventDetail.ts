@@ -8,6 +8,18 @@ export const getEventDetail = (
     return events.find((event) => event._id === id);
 };
 
+export const getDailySchedule = (
+    timestamp: number,
+    events: ReduxCalendarEventInfo[]
+) => {
+    return events.filter(
+        (event) =>
+            event.start === timestamp ||
+            event.end === timestamp ||
+            (event.start < timestamp && event.end > timestamp)
+    );
+};
+
 export const getTagColor = (tagId: string | undefined, tags: CategoryTag[]) => {
     const foundColor = tags.find((tag) => tag._id === tagId)?.color;
     return foundColor ? foundColor : null;

@@ -26,7 +26,7 @@ const getMockEvents = async (): Promise<MockEventsApi> => {
     const events = mockEvents;
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            const success = Math.random() > 0.05;
+            const success = Math.random() > 0.01;
 
             if (success) {
                 resolve({
