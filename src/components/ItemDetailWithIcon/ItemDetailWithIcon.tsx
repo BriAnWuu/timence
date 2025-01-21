@@ -5,9 +5,15 @@ interface ItemDetailWithIconProps {
     icon?: any;
     text?: string | ReactNode;
     color?: string | null;
+    textColor?: string;
 }
 
-function ItemDetailWithIcon({ icon, text, color }: ItemDetailWithIconProps) {
+function ItemDetailWithIcon({
+    icon,
+    text,
+    color,
+    textColor,
+}: ItemDetailWithIconProps) {
     return (
         <Stack spacing={2} direction="row" sx={{ alignItems: "center" }}>
             <Box
@@ -32,7 +38,9 @@ function ItemDetailWithIcon({ icon, text, color }: ItemDetailWithIconProps) {
                     />
                 )}
             </Box>
-            <DialogContentText>{text}</DialogContentText>
+            <DialogContentText color={textColor || "textSecondary"}>
+                {text}
+            </DialogContentText>
         </Stack>
     );
 }

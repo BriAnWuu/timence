@@ -1,0 +1,24 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.day-schedule {
+    &__event-list {
+        display: flex;
+        flex-direction: column;
+        gap: calc($SPACING * 2);
+    }
+
+    &__event-item {
+        display: flex;
+        flex-direction: column;
+        gap: calc($SPACING * 0.75);
+        border-radius: 15px;
+        padding: calc($SPACING * 3);
+    }
+
+    &__event-item-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: calc($SPACING);
+    }
+}

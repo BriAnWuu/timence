@@ -52,7 +52,7 @@ function DaySchedule({ children }: PropsWithChildren) {
                 </div>
                 {children}
 
-                <div key={targetDate}>
+                <div key={targetDate} className="day-schedule__main-content">
                     <EventList currentDate={targetDate} />
                     <WordOfTheDay currentDate={formatDateDash(targetDate)} />
                 </div>

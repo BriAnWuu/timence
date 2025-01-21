@@ -38,7 +38,7 @@ const mockEvents: ReduxCalendarEventInfo[] = [
         allDay: true,
         _id: "4",
         // description: "Dinner at Toronto Blue",
-        // tagId?: string
+        tagId: "2",
     },
     {
         title: "Medication",
@@ -56,7 +56,7 @@ const mockEvents: ReduxCalendarEventInfo[] = [
         allDay: true,
         _id: "6",
         // description: "Dinner at Toronto Blue",
-        // tagId?: string
+        tagId: "3",
     },
     {
         title: "Dinner at Toronto Blue",
