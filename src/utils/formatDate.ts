@@ -4,7 +4,7 @@ export const formatDate = (
     if (!timestamp) return undefined;
 
     const thisDate = new Date(timestamp);
-    const options = {
+    const options: Intl.DateTimeFormatOptions = {
         year: "numeric",
         month: "long",
         day: "numeric",
@@ -15,6 +15,8 @@ export const formatDate = (
 };
 
 export const formatDateDash = (timestamp: number) => {
+    if (!timestamp) return undefined;
+
     const thisDate = new Date(timestamp);
     const year = thisDate.getFullYear();
     const month = String(thisDate.getMonth() + 1).padStart(2, "0");
